@@ -11,17 +11,19 @@ export let imageSelect = ng.directive('imageSelect', function(){
 			ngChange: '&',
 			default: '@'
 		},
-		template: '<div><img src="[[ngModel + \'?\' + getThumbnails()]]" class="pick-file" draggable="false" ng-if="ngModel" style="cursor: pointer" />' +
-			'<img skin-src="[[default]]" class="pick-file" draggable="false" ng-if="!ngModel" style="cursor: pointer" />' +
-			'<lightbox show="userSelecting" on-close="userSelecting = false;">' +
-			'<media-library ' +
-				'visibility="selectedFile.visibility"' +
-				'ng-change="updateDocument()" ' +
-				'ng-model="selectedFile.file" ' +
-				'file-format="\'img\'">' +
-			'</media-library>' +
-			'</lightbox>' +
-			'</div>',
+		template: `<div><img ng-src="[[ngModel + '?' + getThumbnails()]]" class="pick-file" draggable="false" ng-if="ngModel" style="cursor: pointer" />
+			<i class="trash" ng-click="restoreDefault()"></i>
+			<i class="edit pick-file"></i>
+			<img skin-src="[[default]]" class="pick-file" draggable="false" ng-if="!ngModel" style="cursor: pointer" />
+			<lightbox show="userSelecting">
+			<media-library 
+				visibility="selectedFile.visibility"
+				ng-change="updateDocument()" 
+				ng-model="selectedFile.file"
+				file-format="'img'">
+			</media-library>
+			</lightbox>'
+			</div>`,
 		link: function(scope, element, attributes){
 			scope.selectedFile = { file: {}, visibility: 'protected' };
 
@@ -30,6 +32,15 @@ export let imageSelect = ng.directive('imageSelect', function(){
 				scope.selectedFile.visibility = 'protected';
 			}
 			scope.selectedFile.visibility = scope.selectedFile.visibility.toLowerCase();
+
+			scope.restoreDefault = () => {
+				setTimeout(() => {
+					scope.ngModel = '';
+					scope.$apply();
+					scope.ngChange();
+					scope.$apply();
+				}, 10);
+			};
 
 			element.on('dragenter', (e) => {
 				e.preventDefault();
@@ -75,17 +86,20 @@ export let imageSelect = ng.directive('imageSelect', function(){
 			});
 
 			scope.updateDocument = () => {
-				scope.userSelecting = false;
-				var path = '/workspace/document/';
-				if(scope.selectedFile.visibility === 'public'){
-					path = '/workspace/pub/document/'
-				}
-				scope.ngModel = path + scope.selectedFile.file._id;
-				scope.ngChange();
+				setTimeout(() => {
+					scope.userSelecting = false;
+					var path = '/workspace/document/';
+					if(scope.selectedFile.visibility === 'public'){
+						path = '/workspace/pub/document/'
+					}
+					scope.ngModel = path + scope.selectedFile.file._id;
+					scope.$apply();
+					scope.ngChange();
+				}, 10);
 			};
 			element.on('click', '.pick-file', () => {
 				scope.userSelecting = true;
-				scope.$apply('userSelecting');
+				scope.$apply();
 			});
 		}
 	}
