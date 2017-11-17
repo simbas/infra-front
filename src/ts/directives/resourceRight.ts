@@ -5,7 +5,7 @@ import { _ } from '../libs/underscore/underscore';
 export let resourceRight = ng.directive('resourceRight', ['$parse', ($parse) => {
     return {
         restrict: 'EA',
-        template: '<div></div>',
+        template: '<div ng-transclude></div>',
         replace: false,
         transclude: true,
         compile: function (element, attributes, transclude) {
@@ -42,26 +42,15 @@ export let resourceRight = ng.directive('resourceRight', ['$parse', ($parse) => 
                             )
                             || 
                             (
-                                resource(scope).myRights && resource(scope).myRights[attributes.name] === undefined
+                                resource(scope).myRights !== undefined && resource(scope).myRights[attributes.name] === undefined
                             )
                         );
                     }
 
                     if (hide) {
-                        if (transcludeScope) {
-                            transcludeScope.$destroy();
-                            transcludeScope = null;
-                        }
-                        content.children().remove();
                         element.hide();
                     }
                     else {
-                        if (!transcludeScope) {
-                            transclude(scope, function (clone, newScope) {
-                                transcludeScope = newScope;
-                                content.append(clone);
-                            });
-                        }
                         element.show();
                     }
                 };
