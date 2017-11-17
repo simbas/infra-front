@@ -16,7 +16,6 @@ export let resourceRight = ng.directive('resourceRight', ['$parse', ($parse) => 
                     throw "Right name is required";
                 }
                 var content = element.children('div');
-                var transcludeScope;
 
                 var switchHide = function () {
                     let hide = true;
@@ -55,7 +54,7 @@ export let resourceRight = ng.directive('resourceRight', ['$parse', ($parse) => 
                     }
                 };
 
-                attributes.$observe('name', () => switchHide);
+                attributes.$observe('name', () => switchHide());
                 scope.$watch(() => resource(scope), () => switchHide());
             }
         }
