@@ -24,7 +24,7 @@ export let imageSelect = ng.directive('imageSelect', function(){
 				ng-model="selectedFile.file"
 				file-format="'img'">
 			</media-library>
-			</lightbox>'
+			</lightbox>
 			</div>`,
 		link: function(scope, element, attributes){
 			scope.selectedFile = { file: {}, visibility: 'protected' };
