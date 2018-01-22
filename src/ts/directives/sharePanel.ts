@@ -1,4 +1,4 @@
-import { ng } from '../ng-start';
+import { ng, Directive } from '../ng-start';
 import { appPrefix, infraPrefix } from '../globals';
 import { http } from '../http';
 import { idiom } from '../idiom';

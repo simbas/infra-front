@@ -359,7 +359,7 @@ let touchEvents = {
     }
 };
 
-interface ResizeParams{
+export interface ResizeParams{
     lock?: {
         right?: boolean,
         left?: boolean,
