@@ -378,7 +378,7 @@ interface ResizeParams{
     }
 }
 
-export let ui = {
+export const ui = {
     extendElement: {
         touchEvents: function (element, params?) {
             if (!params) {

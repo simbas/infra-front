@@ -1,7 +1,7 @@
 # infra-front : Open Digital Education Framework
 
 infra-front is the Open Digital Education (ODE) frontend framework. 
-It is wriiten in typescript and it provides features and components to build and run ODE applications :
+It is writen in typescript and it provides features and components to build and run ODE applications :
 
 - angularJS bootstrap and (light) abstraction (Model, Controllers and Direcctives injection)
 - portal theming (skin, assets overriding, SASS extensions for applications ...)

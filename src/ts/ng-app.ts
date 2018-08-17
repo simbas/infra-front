@@ -455,6 +455,7 @@ module.directive('portal', function(){
 		templateUrl: skin.portalTemplate,
 		compile: function(element, attributes, transclude){
 			element.find('[logout]').attr('href', '/auth/logout?callback=' + skin.logoutCallback);
+			element.find('[logout]').attr("data-tracking","logout")
 			ui.setStyle(skin.theme);
 			Http.prototype.bind('disconnected', function(){
 				window.location.href = '/';
@@ -475,6 +476,7 @@ module.directive('adminPortal', function(){
 		templateUrl: '/public/admin/portal.html',
 		compile: function(element, attributes, transclude){
 			$('[logout]').attr('href', '/auth/logout?callback=' + skin.logoutCallback);
+			element.find('[logout]').attr("data-tracking","logout")
 			http().get('/userbook/preference/admin').done(function(data){
 				var theme = data.preference ? JSON.parse(data.preference) : null
 
